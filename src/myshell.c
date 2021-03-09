@@ -28,7 +28,7 @@ int handle_command(char* command_line, char* dir) {
     int command_end;
     for(command_end = 0; command_line[command_end] && command_line[command_end] != ' ' && command_line[command_end] != '\n'; command_end++){}
     strncat(command, command_line, command_end);
-    if(strcmp(command, "exit") == 0) {
+    if(strcmp(command, "quit") == 0) {
         free(command);
         return -1;
     }
