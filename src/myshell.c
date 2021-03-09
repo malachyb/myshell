@@ -81,9 +81,9 @@ int handle_command(char* command_line, char* dir) {
 
 int main(int argc, char* argv[]) {
     char* shell_path = (char*)calloc(MAX_COMM_SIZE, sizeof(char));
-    strncat(shell_path, "myshell=");
-    strncat(shell_path, PATH);
-    strncat(shell_path, "/myshell");
+    strncat(shell_path, "myshell=", MAX_COMM_SIZE);
+    strncat(shell_path, PATH, MAX_COMM_SIZE);
+    strncat(shell_path, "/myshell", MAX_COMM_SIZE);
     putenv(shell_path);
     char directory[PATH_MAX];
     getcwd(directory, sizeof(directory));
