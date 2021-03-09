@@ -34,6 +34,8 @@ int handle_command(char* command_line, char* dir) {
     }
     if(test_comm(command)) {
         char* curr_comm = (char*)calloc(MAX_COMM_SIZE, sizeof(char));
+        strcat(curr_comm, PATH);
+        strcat(curr_comm, "/");
         strcat(curr_comm, command_line);
         system(curr_comm);
         free(curr_comm);
