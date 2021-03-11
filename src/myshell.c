@@ -13,7 +13,8 @@
 #define CLEAR_FORMAT "\033[0m"
 
 void cd(char* loc) {
-    chdir(loc);
+    if (chdir(loc) == -1)
+        printf("directory not found\n");
 }
 
 char* pwd() {
