@@ -12,6 +12,11 @@
 #define PATH_COLOUR "\033[34m"
 #define CLEAR_FORMAT "\033[0m"
 
+void pause_shell() {
+    printf("Press enter to continue execution...");
+    fgetc(stdin);
+}
+
 void cd(char *loc) {
     if (chdir(loc) == -1)
         printf("directory not found\n");
@@ -66,10 +71,15 @@ int handle_command(char *command_line) {
         printf("%s\n", pwd());
         return 0;
     }
+    if (strcmp(command, "pause") == 0) {
+        pause_shell();
+        return 0;
+    }
     if (test_comm(command)) {
         FILE *out = stdout;
         FILE *comm_out;
         int redir = 0;
+        int end_comm = redir;
         while (command_line[redir++] && command_line[redir] != '>'){}
         if (command_line[redir]) {
             char* open_mode = "w";
@@ -83,7 +93,7 @@ int handle_command(char *command_line) {
         char *curr_comm = (char *) calloc(MAX_COMM_SIZE, sizeof(char));
         strcat(curr_comm, PATH);
         strcat(curr_comm, "/");
-        strcat(curr_comm, command_line);
+        strncat(curr_comm, command_line, end_comm - 1);
         comm_out = popen(curr_comm, "r");
         char *line = (char *) calloc(MAX_COMM_SIZE, sizeof(char));
         while (fgets(line, MAX_COMM_SIZE, comm_out)) {
