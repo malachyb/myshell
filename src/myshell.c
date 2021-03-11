@@ -44,7 +44,7 @@ int test_comm(char* comm) {
     return 0;
 }
 
-int handle_command(char* command_line, char* dir) {
+int handle_command(char* command_line) {
     char* command = (char*)calloc(30, sizeof(char));
     int command_end;
     for(command_end = 0; command_line[command_end] && command_line[command_end] != ' ' && command_line[command_end] != '\n'; command_end++){}
@@ -86,8 +86,6 @@ int main(int argc, char* argv[]) {
     strncat(shell_path, PATH, MAX_COMM_SIZE);
     strncat(shell_path, "/myshell", MAX_COMM_SIZE);
     putenv(shell_path);
-    char directory[PATH_MAX];
-    getcwd(directory, sizeof(directory));
     if (argc == 1) {
         char* command_line = malloc(MAX_COMM_SIZE * sizeof(char));
         int comm_res = 0;
@@ -95,7 +93,7 @@ int main(int argc, char* argv[]) {
             printf("%s%s%s%s$ ", BOLD, PATH_COLOUR, pwd(), CLEAR_FORMAT);
             fgets(command_line, MAX_COMM_SIZE, stdin);
             trim(command_line);
-            comm_res = handle_command(command_line, directory);
+            comm_res = handle_command(command_line);
         }
         free(command_line);
 
