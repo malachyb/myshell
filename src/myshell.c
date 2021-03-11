@@ -23,8 +23,7 @@ char *pwd() {
     return dir;
 }
 
-void
-trim(char *s) { // Taken from jkramer's answer to https://stackoverflow.com/questions/122616/how-do-i-trim-leading-trailing-whitespace-in-a-standard-way
+void trim(char *s) { // Taken from jkramer's answer to https://stackoverflow.com/questions/122616/how-do-i-trim-leading-trailing-whitespace-in-a-standard-way
     char *p = s;
     int l = strlen(p);
 
@@ -68,11 +67,28 @@ int handle_command(char *command_line) {
         return 0;
     }
     if (test_comm(command)) {
+        FILE *out = stdout;
+        FILE *comm_out;
+        int redir = 0;
+        while (command_line[redir++] && command_line[redir] != '>'){}
+        if (command_line[redir]) {
+            char* open_mode = "w";
+            if (command_line[redir++] == '>')
+                open_mode = "a";
+            char* filename = (char*) calloc(PATH_MAX, sizeof(char));
+            while (command_line[redir++] && command_line[redir] != ' ')
+                strncat(filename, &command_line[redir], 1);
+            out = fopen(filename, open_mode);
+        }
         char *curr_comm = (char *) calloc(MAX_COMM_SIZE, sizeof(char));
         strcat(curr_comm, PATH);
         strcat(curr_comm, "/");
         strcat(curr_comm, command_line);
-        system(curr_comm);
+        comm_out = popen(curr_comm, "r");
+        char *line = (char *) calloc(MAX_COMM_SIZE, sizeof(char));
+        while (fgets(line, MAX_COMM_SIZE, comm_out)) {
+            fprintf(out, "%s", line);
+        }
         free(curr_comm);
         free(command);
         return 0;
