@@ -4,3 +4,4 @@ build:
 	gcc dir.c -o ../bin/dir
 	gcc clr.c -o ../bin/clr
 	gcc environ.c -o ../bin/environ
+	gcc echo.c -o ../bin/echo
