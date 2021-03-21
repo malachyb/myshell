@@ -6,3 +6,4 @@ build:
 	gcc environ.c -o ../bin/environ
 	gcc echo.c -o ../bin/echo
 	gcc cat.c -o ../bin/cat
+	gcc rm.c -o ../bin/rm
