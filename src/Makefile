@@ -7,3 +7,4 @@ build:
 	gcc echo.c -o ../bin/echo
 	gcc cat.c -o ../bin/cat
 	gcc rm.c -o ../bin/rm
+	gcc mv.c -o ../bin/mv
