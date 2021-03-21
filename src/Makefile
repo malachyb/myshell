@@ -5,3 +5,4 @@ build:
 	gcc clr.c -o ../bin/clr
 	gcc environ.c -o ../bin/environ
 	gcc echo.c -o ../bin/echo
+	gcc cat.c -o ../bin/cat
