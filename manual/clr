@@ -1,0 +1,1 @@
+clr will clear any text from the terminal screen, preventing the other text from distracting you from any following commands. You can call this command by entering "clr" into the terminal.

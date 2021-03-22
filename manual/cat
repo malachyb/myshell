@@ -1,0 +1,1 @@
+cat takes the contents of a file and prints it to the terminal. It can be used by typing cat, followed by a filename. For example, if we have a file called data.txt, we can enter into the shell "cat data.txt", and the shell will print the contents of data.txt to the terminal.

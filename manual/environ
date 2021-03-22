@@ -1,0 +1,1 @@
+environ will give us all of the environment strings being used by our shell, like the current working directory, or the path (more on these in the next section). You can call this by entering "environ" into your terminal.

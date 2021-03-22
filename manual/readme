@@ -1,0 +1,36 @@
+Welcome to myshell, the best shell program on the planet. To begin with, you'll need to know about the different commands within this shell, and what they do. When you install this shell, by default there are 9 commands installed in this shell. cat, cd, clr, dir, environ, echo, help, mv, pause, quit, and rm.
+
+The first command we have is cat. This takes the contents of a file and prints it to the terminal. It can be used by typing cat, followed by a filename. For example, if we have a file called data.txt, we can enter into the shell "cat data.txt", and the shell will print the contents of data.txt to the terminal.
+
+Our second command is cd. This will change the current directory to a new one. If no directory is supplied, it will instead print the current directory to the terminal. For example, if we have a directory called home, we can enter "cd home", and the shell will move into the directory called home.
+
+Our third command is clr. This will clear any text from the terminal screen, preventing the other text from distracting you from any following commands. You can call this command by entering "clr" into the terminal.
+
+Our fourth command is dir. This will list the contents of a directory, and will default to the current directory. You can call this by entering dir into the terminal, optionally followed by the name of a directory. For example, if we have a directory called games, we can type "dir games" to see the list of games in the directory.
+
+Our fifth command is environ. This will give us all of the environment strings being used by our shell, like the current working directory, or the path (more on these in the next section). You can call this by entering "environ" into your terminal.
+
+Our sixth command is echo. This will simply echo the user. You can call this by entering echo, followed by what you want the shell to print back to you. For example, if we wanted the shell to print "hello, world" to the terminal, we could enter "echo hello, world" into our terminal.
+
+Our seventh command is help. This will print the contents of this manual to the terminal. You can call this command by entering "help" into the terminal.
+
+Our eighth command is mv. This will move a file to another location. You can call this command by entering "mv" followed by the original file's path and the new file path. For example, if we want to move src/a.out to bin/myshell, we would enter "mv src/a.out bin/myshell"
+
+Our ninth command is pause. This will pause the execution of this shell until you press enter. You can call this command by entering "pause" into the terminal.
+
+Our tenth command is quit. This will quit the shell. You can call this command by entering "quit" into the terminal.
+
+Our eleventh command is rm. This will remove a file from a directory. You can call this command by entering "rm" followed by the file you want to remove. For example, if we want to remove a file called tmp.txt, we would enter "rm tmp.txt".
+
+
+
+Now, we'll clear up some of the confusion you may have had about the environmental strings I mentioned earlier. Environmental strings aren't a very complicated concept. They are simply a group of things that the shell will keep track of that it needs in order to work properly. It contains things like the current directory, the locations that it will search for commands in, and many other miscellaneous things that it keeps track of.
+
+
+
+Another thing you can do with this shell is redirect the output. By using the symbol ">", you can make the shell delete the contents of a file and write the output of a command into it instead, and with the symbol ">>" you can make it right without deleting the contents. For example, you can enter "echo hello world > file.txt" and it will overwrite the contents of file txt with the phrase "hello world". However, if we enter "echo hello world >> file.txt" it will add the phrase "hello world" to the previous contents of file.txt.
+Currently the shell cannot redirect input, but that will change some time in the future.
+
+
+
+This shell works by creating processes, which are tasks that the computer runs. Almost every command creates a new process, which will have its own set of environmental variables, which means that if a process changes its environmental variables it will not affect the variables of any other process. Processes can be executed in the background or foreground, except this shell currently cannot do background execution. When a process is executed in the background, other processes can still be executed, but when a process is executed in the foreground no other processes can be executed until the current one finishes.

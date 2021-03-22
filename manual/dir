@@ -1,0 +1,1 @@
+dir will list the contents of a directory, and will default to the current directory. You can call this by entering dir into the terminal, optionally followed by the name of a directory. For example, if we have a directory called games, we can type "dir games" to see the list of games in the directory.

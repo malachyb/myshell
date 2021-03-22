@@ -1,0 +1,1 @@
+cd will change the current directory to a new one. If no directory is supplied, it will instead print the current directory to the terminal. For example, if we have a directory called home, we can enter "cd home", and the shell will move into the directory called home.

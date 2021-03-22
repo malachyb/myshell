@@ -1,0 +1,1 @@
+echo will simply echo the user. You can call this by entering echo, followed by what you want the shell to print back to you. For example, if we wanted the shell to print "hello, world" to the terminal, we could enter "echo hello, world" into our terminal.
