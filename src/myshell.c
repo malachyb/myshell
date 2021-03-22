@@ -76,12 +76,14 @@ int handle_command(char *command_line) {
         return 0;
     }
     if (test_comm(command)) {
+        int redir_present = 0;
         FILE *out = stdout;
         FILE *comm_out;
         int redir = 0;
-        int end_comm = redir;
         while (command_line[redir++] && command_line[redir] != '>'){}
+        int end_comm = redir;
         if (command_line[redir]) {
+            redir_present++;
             char* open_mode = "w";
             if (command_line[redir++] == '>')
                 open_mode = "a";
@@ -97,7 +99,11 @@ int handle_command(char *command_line) {
         comm_out = popen(curr_comm, "r");
         char *line = (char *) calloc(MAX_COMM_SIZE, sizeof(char));
         while (fgets(line, MAX_COMM_SIZE, comm_out)) {
-            fprintf(out, "%s", line);
+            for (int i = 0; line[i]; i++) {
+                if (redir_present && line[i] == '\033')
+                    i += 5;
+                fprintf(out, "%c", line[i]);
+            }
         }
         free(curr_comm);
         free(command);
