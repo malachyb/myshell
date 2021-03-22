@@ -7,6 +7,10 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     FILE* file = fopen(argv[1], "r");
+    if (file == NULL) {
+        printf("Error: file does not exist\n");
+        return 1;
+    }
     char* line = (char*) calloc(256, sizeof(char));
     while (fgets(line, 256, file)) {
         printf("%s", line);
