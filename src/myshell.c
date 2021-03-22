@@ -107,6 +107,8 @@ int handle_command(char *command_line) {
         }
         free(curr_comm);
         free(command);
+        if (redir_present)
+            fclose(out);
         return 0;
     }
     printf("Command not found, try something else\n");
