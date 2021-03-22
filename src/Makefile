@@ -8,3 +8,4 @@ build:
 	gcc cat.c -o ../bin/cat
 	gcc rm.c -o ../bin/rm
 	gcc mv.c -o ../bin/mv
+	gcc help.c -o ../bin/help

@@ -1,0 +1,1 @@
+mv will move a file to another location. You can call this command by entering "mv" followed by the original file's path and the new file path. For example, if we want to move src/a.out to bin/myshell, we would enter "mv src/a.out bin/myshell"

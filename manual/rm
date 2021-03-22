@@ -1,0 +1,1 @@
+rm will remove a file from a directory. You can call this command by entering "rm" followed by the file you want to remove. For example, if we want to remove a file called tmp.txt, we would enter "rm tmp.txt".

@@ -110,10 +110,14 @@ int handle_command(char *command_line) {
 
 int main(int argc, char *argv[]) {
     char *shell_path = (char *) calloc(MAX_COMM_SIZE, sizeof(char));
-    strncat(shell_path, "myshell=", MAX_COMM_SIZE);
     strncat(shell_path, PATH, MAX_COMM_SIZE);
     strncat(shell_path, "/myshell", MAX_COMM_SIZE);
-    putenv(shell_path);
+    setenv("myshell", shell_path, 1);
+    free(shell_path);
+    char *path = (char *) calloc(MAX_COMM_SIZE, sizeof(char));
+    strncat(path, PATH, MAX_COMM_SIZE);
+    setenv("PATH", path, 1);
+    free(path);
     FILE *inp = stdin;
     if (argc != 1)
         inp = fopen(argv[1], "r");
