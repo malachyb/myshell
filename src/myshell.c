@@ -17,6 +17,14 @@ void pause_shell() {
     fgetc(stdin);
 }
 
+int async(char* line) {
+    for (int i = 0; line[i]; i++) {
+        if (line[i] == '&')
+            return i;
+    }
+    return 0;
+}
+
 void cd(char *loc) {
     if (chdir(loc) == -1)
         printf("directory not found\n");
@@ -49,7 +57,7 @@ int test_comm(char *comm) {
     return 0;
 }
 
-int handle_command(char *command_line) {
+int handle_command(char *command_line, int no_out) {
     char *command = (char *) calloc(30, sizeof(char));
     int command_end;
     for (command_end = 0; command_line[command_end] && command_line[command_end] != ' ' &&
@@ -78,6 +86,8 @@ int handle_command(char *command_line) {
     if (test_comm(command)) {
         int redir_present = 0;
         FILE *out = stdout;
+        if (no_out)
+            out = fopen("/dev/null", "w");
         FILE *comm_out;
         int redir = 0;
         while (command_line[redir++] && command_line[redir] != '>'){}
@@ -111,7 +121,8 @@ int handle_command(char *command_line) {
             fclose(out);
         return 0;
     }
-    printf("Command not found, try something else\n");
+    if (command_line[0])
+        printf("Command not found, try something else\n");
     free(command);
     return 0;
 }
@@ -136,7 +147,15 @@ int main(int argc, char *argv[]) {
             printf("%s%s%s%s$ ", BOLD, PATH_COLOUR, pwd(), CLEAR_FORMAT);
         fgets(command_line, MAX_COMM_SIZE, inp);
         trim(command_line);
-        comm_res = handle_command(command_line);
+        int a = async(command_line);
+        if (a) {
+            command_line[a] = 0;
+            if (fork() == 0) {
+                handle_command(command_line, 1);
+                exit(0);
+            }
+        } else
+            comm_res = handle_command(command_line, 0);
     }
     free(command_line);
     return 0;
