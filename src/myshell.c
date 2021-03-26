@@ -88,10 +88,11 @@ int handle_command(char *command_line, int no_out) {
     if (command_line[redir]) {
         redir_present++;
         char* open_mode = "w";
-        if (command_line[++redir] == '>')
             open_mode = "a";
+        if (command_line[++redir] == '>') {
+            redir++;
+        }
         char* filename = (char*) calloc(PATH_MAX, sizeof(char));
-        redir++;
         while (command_line[++redir] && command_line[redir] != ' ') {
             strncat(filename, &command_line[redir], 1);
         }
