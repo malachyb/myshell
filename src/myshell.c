@@ -98,8 +98,10 @@ int handle_command(char *command_line, int no_out) {
             if (command_line[++redir] == '>')
                 open_mode = "a";
             char* filename = (char*) calloc(PATH_MAX, sizeof(char));
-            while (command_line[redir++] && command_line[redir] != ' ')
+            redir++;
+            while (command_line[++redir] && command_line[redir] != ' ') {
                 strncat(filename, &command_line[redir], 1);
+            }
             out = fopen(filename, open_mode);
         }
         char *curr_comm = (char *) calloc(MAX_COMM_SIZE, sizeof(char));
@@ -110,8 +112,9 @@ int handle_command(char *command_line, int no_out) {
         char *line = (char *) calloc(MAX_COMM_SIZE, sizeof(char));
         while (fgets(line, MAX_COMM_SIZE, comm_out)) {
             for (int i = 0; line[i]; i++) {
-                if (redir_present && line[i] == '\033')
+                if (redir_present && line[i] == '\033') {
                     i += 5;
+                }
                 fprintf(out, "%c", line[i]);
             }
         }
