@@ -12,8 +12,8 @@
 #define PATH_COLOUR "\033[34m"
 #define CLEAR_FORMAT "\033[0m"
 
-void pause_shell() {
-    printf("Press enter to continue execution...");
+void pause_shell(FILE *out) {
+    fprintf(out, "Press enter to continue execution...");
     fgetc(stdin);
 }
 
@@ -25,9 +25,10 @@ int async(char* line) {
     return 0;
 }
 
-void cd(char *loc) {
+char* cd(char *loc) {
     if (chdir(loc) == -1)
-        printf("directory not found\n");
+        return "directory not found\n";
+    return "";
 }
 
 char *pwd() {
@@ -58,6 +59,26 @@ int test_comm(char *comm) {
 }
 
 int handle_command(char *command_line, int no_out) {
+    int redir_present = 0;
+    FILE *out = stdout;
+    if (no_out)
+        out = fopen("/dev/null", "w");
+    FILE *comm_out;
+    int redir = 0;
+    while (command_line[redir++] && command_line[redir] != '>'){}
+    int end_comm = redir;
+    if (command_line[redir]) {
+        redir_present++;
+        char* open_mode = "w";
+        if (command_line[++redir] == '>')
+            open_mode = "a";
+        char* filename = (char*) calloc(PATH_MAX, sizeof(char));
+        redir++;
+        while (command_line[++redir] && command_line[redir] != ' ') {
+            strncat(filename, &command_line[redir], 1);
+        }
+        out = fopen(filename, open_mode);
+    }
     char *command = (char *) calloc(30, sizeof(char));
     int command_end;
     for (command_end = 0; command_line[command_end] && command_line[command_end] != ' ' &&
@@ -73,37 +94,17 @@ int handle_command(char *command_line, int no_out) {
             int i = strlen(command);
             while (++i < strlen(command_line))
                 strncat(loc, &command_line[i], 1);
-            cd(loc);
+            fprintf(out, "%s", cd(loc));
             return 0;
         }
-        printf("%s\n", pwd());
+        fprintf(out, "%s\n", pwd());
         return 0;
     }
     if (strcmp(command, "pause") == 0) {
-        pause_shell();
+        pause_shell(out);
         return 0;
     }
     if (test_comm(command)) {
-        int redir_present = 0;
-        FILE *out = stdout;
-        if (no_out)
-            out = fopen("/dev/null", "w");
-        FILE *comm_out;
-        int redir = 0;
-        while (command_line[redir++] && command_line[redir] != '>'){}
-        int end_comm = redir;
-        if (command_line[redir]) {
-            redir_present++;
-            char* open_mode = "w";
-            if (command_line[++redir] == '>')
-                open_mode = "a";
-            char* filename = (char*) calloc(PATH_MAX, sizeof(char));
-            redir++;
-            while (command_line[++redir] && command_line[redir] != ' ') {
-                strncat(filename, &command_line[redir], 1);
-            }
-            out = fopen(filename, open_mode);
-        }
         char *curr_comm = (char *) calloc(MAX_COMM_SIZE, sizeof(char));
         strcat(curr_comm, PATH);
         strcat(curr_comm, "/");
@@ -154,6 +155,7 @@ int main(int argc, char *argv[]) {
         if (a) {
             command_line[a] = 0;
             if (fork() == 0) {
+                trim(command_line);
                 handle_command(command_line, 1);
                 exit(0);
             }
